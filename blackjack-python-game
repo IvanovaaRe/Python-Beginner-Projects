@@ -1,0 +1,70 @@
+import random
+
+cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+def deal_card():
+    user_cards = []
+    user_card1 = random.choice(cards)
+    user_cards.append(user_card1)
+    user_card2 = random.choice(cards)
+    user_cards.append(user_card2)
+    print(user_cards)
+    computer_cards = []
+    computer_card1 = random.choice(cards)
+    computer_cards.append(computer_card1)
+    computer_card2 = random.choice(cards)
+    computer_cards.append(computer_card2)
+    print(computer_cards)
+    return user_cards, computer_cards
+
+def calculate_score(cards):
+    if sum(cards) == 21 and len(cards) == 2:
+        return 0
+    if 11 in cards and sum(cards) > 21:
+        cards.remove(11)
+        cards.append(1)
+    return sum(cards)
+
+def compare(user_score, computer_score):
+    if computer_score == user_score:
+        return "It's a draw!"
+    elif computer_score == 0:
+        return "Lose, opponent has Blackjack!"
+    elif user_score == 0:
+        return "Blackjack! You win!"
+    elif computer_score > 21:
+        return "Opponent went over. You win!"
+    elif user_score > 21:
+        return "You went over 21. You lose!"
+    elif user_score > computer_score:
+        return "You win!"
+    else:
+        return "You lose!"
+
+
+user_cards, computer_cards = deal_card()
+
+user_score = calculate_score(user_cards)
+computer_score = calculate_score(computer_cards)
+
+if computer_score == 0 or user_score > 21:
+    print("You lose!")
+elif user_score == 0:
+    print("You win!")
+else:
+    user_choice = input("Do you want another card? Please enter yes or no: ")
+    while user_choice == "yes":
+        new_card = random.choice(cards)
+        user_cards.append(new_card)
+        user_score = calculate_score(user_cards)
+        print(f"Your cards: {user_cards}, current score: {user_score}")
+        if user_score > 21:
+            print("You went over 21. You lose!")
+            break
+        user_choice = input("Do you want another card? Please enter yes or no: ")
+    if user_score <= 21:
+        while computer_score != 0 and computer_score < 17:
+            computer_cards.append(random.choice(cards))
+            computer_score = calculate_score(computer_cards)
+
+print(f"User score: {user_score}, Computer score: {computer_score}")
+print(compare(user_score, computer_score))
