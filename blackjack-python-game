@@ -7,14 +7,15 @@ def deal_card():
     user_cards.append(user_card1)
     user_card2 = random.choice(cards)
     user_cards.append(user_card2)
-    print(user_cards)
+    print(f"Your initial cards: {user_cards}")
     computer_cards = []
     computer_card1 = random.choice(cards)
     computer_cards.append(computer_card1)
     computer_card2 = random.choice(cards)
     computer_cards.append(computer_card2)
-    print(computer_cards)
+    print(f"Computer's first card: {computer_cards[0]}")
     return user_cards, computer_cards
+
 
 def calculate_score(cards):
     if sum(cards) == 21 and len(cards) == 2:
@@ -23,6 +24,7 @@ def calculate_score(cards):
         cards.remove(11)
         cards.append(1)
     return sum(cards)
+
 
 def compare(user_score, computer_score):
     if computer_score == user_score:
